@@ -1,0 +1,146 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "title" : "PartyReferenceDataDirectorySrmREST",
+    "version" : "1.0.0",
+    "description" : "PartyReferenceDataDirectorySrmREST"
+  },
+  "paths" : {
+    "/employee-detail/update" : {
+      "put" : {
+        "operationId" : "putEmployeeDetailUpdate",
+        "responses" : {
+          "209" : {
+            "description" : "The operation was successful."
+          },
+          "210" : {
+            "description" : "The operation was successful."
+          },
+          "404" : {
+            "description" : "The operation was successful."
+          },
+          "500" : {
+            "description" : "The operation was successful."
+          },
+          "503" : {
+            "description" : "The operation was successful."
+          },
+          "200" : {
+            "description" : "The operation was successful."
+          },
+          "504" : {
+            "description" : "The operation was successful."
+          }
+        },
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "description" : "Update update",
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "schema" : {
+            "type" : "string"
+          },
+          "description" : "The request body for the operation",
+          "required" : true
+        }, {
+          "name" : "deviceId",
+          "in" : "header",
+          "type" : "string"
+        }, {
+          "name" : "moduloId",
+          "in" : "header",
+          "type" : "string"
+        }, {
+          "name" : "branchId",
+          "in" : "header",
+          "type" : "string"
+        }, {
+          "name" : "ipOrigen",
+          "in" : "header",
+          "type" : "string"
+        }, {
+          "name" : "messageId",
+          "in" : "header",
+          "type" : "string"
+        }, {
+          "name" : "countryCode",
+          "in" : "header",
+          "type" : "string"
+        }, {
+          "name" : "serviceId",
+          "in" : "header",
+          "type" : "string"
+        }, {
+          "name" : "channelId",
+          "in" : "header",
+          "type" : "string"
+        }, {
+          "name" : "funcionalidadId",
+          "in" : "header",
+          "type" : "string"
+        }, {
+          "name" : "groupMember",
+          "in" : "header",
+          "type" : "string"
+        }, {
+          "name" : "referenceNumber",
+          "in" : "header",
+          "type" : "string"
+        }, {
+          "name" : "supervisorId",
+          "in" : "header",
+          "type" : "string"
+        }, {
+          "name" : "serverId",
+          "in" : "header",
+          "type" : "string"
+        }, {
+          "name" : "traceId",
+          "in" : "header",
+          "type" : "string"
+        }, {
+          "name" : "parentId",
+          "in" : "header",
+          "type" : "string"
+        }, {
+          "name" : "cardIdType",
+          "in" : "header",
+          "type" : "string"
+        }, {
+          "name" : "netId",
+          "in" : "header",
+          "type" : "string"
+        }, {
+          "name" : "consumerId",
+          "in" : "header",
+          "type" : "string"
+        }, {
+          "name" : "timeStamp",
+          "in" : "header",
+          "type" : "string"
+        }, {
+          "name" : "userId",
+          "in" : "header",
+          "type" : "string"
+        } ]
+      }
+    },
+    "/getHealth" : {
+      "get" : {
+        "operationId" : "getGetHealth",
+        "responses" : {
+          "200" : {
+            "description" : "The operation was successful.",
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        },
+        "produces" : [ "application/json" ],
+        "description" : "Retrieve getHealth"
+      }
+    }
+  },
+  "basePath" : "/party-reference-data-directory/v1"
+}
