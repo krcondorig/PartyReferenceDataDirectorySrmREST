@@ -1,25 +1,68 @@
 BROKER SCHEMA ace.bus.api.putEmployeeDetailUpdate
-
+PATH pe.ibk.common, pe.ibk.common.audit;
 
 CREATE COMPUTE MODULE putEmployeeDetailUpdateCICS_PrepareReq
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
-		-- CALL CopyMessageHeaders();
-		-- CALL CopyEntireMessage();
-		RETURN TRUE;
+		
+		DECLARE refParametersIn REFERENCE TO InputLocalEnvironment.REST.Input.Parameters;
+		DECLARE refBody REFERENCE TO InputRoot.JSON.Data;
+		DECLARE refEnv REFERENCE TO Environment;
+		DECLARE refEnvAudit REFERENCE TO refEnv.Audit;
+		DECLARE refOut REFERENCE TO OutputRoot;
+		
+		/** Audit input data **/
+		CALL getInputDataAudit( refEnv, InputLocalEnvironment, InputRoot );
+		
+		CALL setPropertiesMessage(refOut,getENCODING_HOST(),getCCSID_HOST());
+		
+		/** Set Service secuence **/
+		SET refEnv.Srv.Secuence = '01';
+		
+		CREATE LASTCHILD OF OutputRoot DOMAIN 'DFDL';
+		DECLARE refBodyOut REFERENCE TO OutputRoot.DFDL;
+		
+		--Prepara la trama que sera enviada al CICS
+		CALL prepareDataRequestCICS(refBodyOut,refEnv,refParametersIn,refBody);
+		
+		CALL setConfigPropertiesCICS( OutputLocalEnvironment, refEnv);	
+		
+		/** Audit request data **/
+		CALL setMonitoringRequestTime( refEnv );
+		CALL getRequestDataAudit( refEnv,  OutputRoot, OutputLocalEnvironment );
+		
+		SET Environment.ZEROXG.DataCICS = CAST( ASBITSTREAM(OutputRoot.DFDL CCSID getCCSID_HOST() ENCODING getENCODING_HOST()) AS CHARACTER CCSID getCCSID_HOST() ENCODING getENCODING_HOST());---Sirva para ver la trama , guardar en txt
+		
+		-- TODO: Solo para pruebas locales.
+		PROPAGATE TO LABEL 'localFlow';		
+		
+				
+		RETURN FALSE;
 	END;
 
 END MODULE;
+
+
 
 CREATE COMPUTE MODULE putEmployeeDetailUpdateCICS_MockResponse
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
-		-- CALL CopyMessageHeaders();
-		-- CALL CopyEntireMessage();
+		
+		DECLARE refParametersIn REFERENCE TO InputLocalEnvironment.REST.Input.Parameters;
+		DECLARE refInput REFERENCE TO InputRoot.DFDL;
+		DECLARE refEnv REFERENCE TO Environment;
+		DECLARE refEnvAudit REFERENCE TO refEnv.Audit;
+		
+		DECLARE refMessageIn REFERENCE TO refInput.{C_NS}:MESSAGEHOST;
+		
+		
+
 		RETURN TRUE;
 	END;
 
 END MODULE;
+
+
 
 CREATE COMPUTE MODULE putEmployeeDetailUpdateCICS_PrepareRes
 	CREATE FUNCTION Main() RETURNS BOOLEAN
@@ -31,11 +74,13 @@ CREATE COMPUTE MODULE putEmployeeDetailUpdateCICS_PrepareRes
 
 END MODULE;
 
+
+
 CREATE COMPUTE MODULE putEmployeeDetailUpdateCICS_PrepareError
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
-		-- CALL CopyMessageHeaders();
-		-- CALL CopyEntireMessage();
+		
+					
 		RETURN TRUE;
 	END;
 

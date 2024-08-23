@@ -5,6 +5,7 @@
 	<projects>
 		<project>common-core-library</project>
 		<project>control-core-library</project>
+		<project>LIB_BUS_SRV_A0716</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
