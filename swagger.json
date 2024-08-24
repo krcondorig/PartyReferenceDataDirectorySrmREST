@@ -39,7 +39,7 @@
           "name" : "body",
           "in" : "body",
           "schema" : {
-            "type" : "string"
+            "$ref" : "#/definitions/TramaRq_putEmployeeDetailUpdate"
           },
           "description" : "The request body for the operation",
           "required" : true
@@ -142,5 +142,38 @@
       }
     }
   },
-  "basePath" : "/party-reference-data-directory/v1"
+  "basePath" : "/party-reference-data-directory/v1",
+  "definitions" : {
+    "TramaRq_putEmployeeDetailUpdate" : {
+      "type" : "object",
+      "properties" : {
+        "referenceIdentification" : {
+          "type" : "string"
+        },
+        "collaborator" : {
+          "type" : "object",
+          "properties" : {
+            "flagType" : {
+              "type" : "string"
+            },
+            "flagTypeCompany" : {
+              "type" : "string"
+            },
+            "flagTypePosition" : {
+              "type" : "string"
+            },
+            "flagCompany" : {
+              "type" : "string"
+            },
+            "flagTypeRelationship" : {
+              "type" : "string"
+            }
+          }
+        },
+        "accountsExecutiveId" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
 }

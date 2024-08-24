@@ -6,6 +6,8 @@ BEGIN
 
 	DECLARE refBody		REFERENCE TO refOut;
 	DECLARE isBSEOJIN	CHARACTER getParmSecSrv(refEnv, 'BSEOJIN');
+	
+	--SET refEnv.PRUEBA3.requestBODY = refBodyIn;
 
 
 	IF isBSEOJIN = 'S' THEN
@@ -20,7 +22,7 @@ BEGIN
 	END IF;
 
 	/* Configurar la data del mensaje */
-	CALL prepareDataCICS(refEnv,refOut,refBody,refParameters);
+	CALL prepareDataCICS(refEnv,refOut,refBodyIn,refParameters);
 
 END;
 
@@ -32,8 +34,10 @@ BEGIN
 	--CREATE FIELD refOut.BSEC710P_DATOS_INPUT;
 	CREATE FIELD refOut.SRMC33ES_DATA_INPUT;
 	
-	
 	DECLARE refBodyOut REFERENCE TO refOut.SRMC33ES_DATA_INPUT;
+	
+
+	
 	SET refBodyOut.SRMC33ES_ID_CLIE = FormatAlignCadena(refBody.referenceIdentification, 14, ' ', 'IZQ');
 	SET refBodyOut.SRMC33ES_FLAGS_COLABORADOR.SRMC33ES_ID_COLA = FormatAlignCadena(refBody.collaborator.flagType, 1, ' ', 'IZQ');
 	SET refBodyOut.SRMC33ES_FLAGS_COLABORADOR.SRMC33ES_ID_INST_COLA = FormatAlignCadena(refBody.collaborator.flagTypeCompany, 1, ' ', 'IZQ');
@@ -73,4 +77,21 @@ BEGIN
 END;
 
 
+CREATE PROCEDURE prepareResponseJSON(IN refOut REFERENCE, IN refEnv REFERENCE)
+BEGIN
+
+    CREATE LASTCHILD OF refOut DOMAIN 'JSON';
+    CREATE FIELD refOut.JSON.Data;
+    DECLARE refOutData REFERENCE TO refOut.JSON.Data;
+
+
+    SET refOutData.SSRMC33ES_CO_RETO_O = refEnv.OutputValues.SRMC33ES_CO_RETO_O;
+    SET refOutData.SRMC33ES_DE_MENSAJE_O.SRMC33ES_ID_PROG_O = refEnv.OutputValues.SRMC33ES_DE_MENSAJE_O.SRMC33ES_ID_PROG_O;
+    SET refOutData.SRMC33ES_DE_MENSAJE_O.SRMC33ES_DE_MSJE_O = refEnv.OutputValues.SRMC33ES_DE_MENSAJE_O.SRMC33ES_DE_MSJE_O;
+    SET refOutData.SRMC33ES_ES_DISP_O = refEnv.OutputValues.SRMC33ES_ES_DISP_O;    
+       
+    
+    
+
+END;
 
